@@ -6,6 +6,7 @@ import {useForm} from "../../shared/hooks/form-hook";
 
 import "./PlaceForm.css"
 import {useEffect, useState} from "react";
+import Card from "../../shared/components/UIElements/Card";
 
 const DUMMY_PLACES = [
     {
@@ -54,16 +55,18 @@ export const UpdatePlace = () => {
     const identifiedPlace = DUMMY_PLACES.find(p => p.id === placeId);
 
     useEffect(() => {
-        setFormData({
-            title: {
-                value: identifiedPlace.title,
-                isValid: true
-            },
-            description: {
-                value: identifiedPlace.description,
-                isValid: true
-            }
-        }, true)
+        if (identifiedPlace) {
+            setFormData({
+                title: {
+                    value: identifiedPlace.title,
+                    isValid: true
+                },
+                description: {
+                    value: identifiedPlace.description,
+                    isValid: true
+                }
+            }, true)
+        }
 
         setIsLoading(false)
     }, [setFormData, identifiedPlace])
@@ -76,7 +79,9 @@ export const UpdatePlace = () => {
     if (!identifiedPlace) {
         return (
             <div className="center">
-                <h2>Could not find a place!</h2>
+                <Card>
+                    <h2>Could not find a place!</h2>
+                </Card>
             </div>
         )
     }
