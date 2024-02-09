@@ -52,7 +52,7 @@ export const Auth = () => {
 
         if (isLoginMode) {
             try {
-                await sendRequest(
+                const responseData = await sendRequest(
                     `${process.env.REACT_APP_API_BASE_URL}/users/login`,
                     "POST",
                     JSON.stringify({
@@ -64,13 +64,13 @@ export const Auth = () => {
                     },
                 );
 
-                auth.login();
+                auth.login(responseData.user.id);
             } catch (err) {
             }
 
         } else {
             try {
-                await sendRequest(
+                const responseData = await sendRequest(
                     `${process.env.REACT_APP_API_BASE_URL}/users/signup`,
                     "POST",
                     JSON.stringify({
@@ -83,7 +83,7 @@ export const Auth = () => {
                     }
                 );
 
-                auth.login();
+                auth.login(responseData.user.id);
             } catch (err) {
             }
         }
