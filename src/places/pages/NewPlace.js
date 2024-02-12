@@ -50,7 +50,10 @@ export const NewPlace = () => {
             await sendRequest(
                 `${process.env.REACT_APP_API_BASE_URL}/places`,
                 'POST',
-                formData
+                formData,
+                {
+                    Authorization: `Bearer ${auth.token}`
+                }
             )
 
             history.push('/');
