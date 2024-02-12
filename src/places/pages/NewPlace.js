@@ -45,7 +45,7 @@ export const NewPlace = () => {
         formData.append('description', formState.inputs.description.value);
         formData.append('address', formState.inputs.address.value);
         formData.append('image', formState.inputs.image.value);
-        formData.append('creator', auth.userId);
+
         try {
             await sendRequest(
                 `${process.env.REACT_APP_API_BASE_URL}/places`,
