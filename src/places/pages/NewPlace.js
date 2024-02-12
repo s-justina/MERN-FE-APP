@@ -10,6 +10,7 @@ import ErrorModal from "../../shared/components/UIElements/ErrorModal";
 
 import LoadingSpinner from "../../shared/components/UIElements/LoadingSpinner";
 import "./PlaceForm.css"
+import {ImageUpload} from "../../shared/components/FormElements/ImageUpload";
 
 
 export const NewPlace = () => {
@@ -25,6 +26,10 @@ export const NewPlace = () => {
         address: {
             value: "",
             isValid: false,
+        },
+        image: {
+            value: "",
+            isValid: false,
         }
     }, false)
 
@@ -35,20 +40,17 @@ export const NewPlace = () => {
 
     const placeSubmitHandler = async (e) => {
         e.preventDefault();
-
+        const formData = new FormData();
+        formData.append('title', formState.inputs.title.value);
+        formData.append('description', formState.inputs.description.value);
+        formData.append('address', formState.inputs.address.value);
+        formData.append('image', formState.inputs.image.value);
+        formData.append('creator', auth.userId);
         try {
             await sendRequest(
                 `${process.env.REACT_APP_API_BASE_URL}/places`,
                 'POST',
-                JSON.stringify({
-                    title: formState.inputs.title.value,
-                    description: formState.inputs.description.value,
-                    address: formState.inputs.address.value,
-                    creator: auth.userId,
-                }),
-                {
-                    'Content-Type': "application/json"
-                }
+                formData
             )
 
             history.push('/');
@@ -80,6 +82,7 @@ export const NewPlace = () => {
                        validators={[VALIDATOR_REQUIRE()]}
                        errorText="Please enter a valid address."
                        onInput={inputHandler}/>
+                <ImageUpload id="image" onInput={inputHandler} errorText="Please provide an image."/>
                 <Button type="submit" disabled={!formState.isValid}>ADD PLACE</Button>
             </form>
         </>
