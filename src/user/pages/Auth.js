@@ -8,6 +8,7 @@ import {useHttpClient} from "../../shared/hooks/http-hook";
 import {AuthContext} from "../../shared/context/auth-context";
 import LoadingSpinner from "../../shared/components/UIElements/LoadingSpinner";
 import ErrorModal from "../../shared/components/UIElements/ErrorModal";
+import {ImageUpload} from "../../shared/components/FormElements/ImageUpload";
 
 import "./Auth.css";
 
@@ -34,12 +35,17 @@ export const Auth = () => {
             setFormData({
                 ...formState.inputs,
                 name: undefined,
+                image: undefined,
             }, formState.inputs.email.isValid && formState.inputs.password.isValid)
         } else {
             setFormData({
                 ...formState.inputs,
                 name: {
                     value: "",
+                    isValid: false
+                },
+                image: {
+                    value: null,
                     isValid: false
                 }
             }, false)
@@ -69,18 +75,16 @@ export const Auth = () => {
             }
 
         } else {
+            const formData = new FormData();
+            formData.append('email', formState.inputs.email.value);
+            formData.append('name', formState.inputs.name.value);
+            formData.append('password', formState.inputs.password.value);
+            formData.append('image', formState.inputs.image.value);
             try {
                 const responseData = await sendRequest(
                     `${process.env.REACT_APP_API_BASE_URL}/users/signup`,
                     "POST",
-                    JSON.stringify({
-                        name: formState.inputs.name.value,
-                        email: formState.inputs.email.value,
-                        password: formState.inputs.password.value
-                    }),
-                    {
-                        "Content-Type": "application/json"
-                    }
+                    formData
                 );
 
                 auth.login(responseData.user.id);
@@ -105,6 +109,7 @@ export const Auth = () => {
                                             errorText="Please enter a name."
                                             onInput={inputHandler}
                     />}
+                    {!isLoginMode && <ImageUpload id="image" center onInput={inputHandler}/>}
                     <Input id="email"
                            element="input"
                            type="email"
