@@ -37,8 +37,9 @@ export const UpdatePlace = () => {
         const fetchPlace = async () => {
             try {
                 const responseData = await sendRequest(`${process.env.REACT_APP_API_BASE_URL}/places/${placeId}`);
-                console.log(responseData)
+
                 setLoadedPlace(responseData.place);
+
                 setFormData({
                     title: {
                         value: responseData.place.title,

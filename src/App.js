@@ -1,4 +1,3 @@
-import {useCallback, useState} from "react";
 import {BrowserRouter as Router, Redirect, Route, Switch} from "react-router-dom";
 import {Users} from "./user/pages/Users";
 import {NewPlace} from "./places/pages/NewPlace";
@@ -7,21 +6,11 @@ import {UserPlaces} from "./places/pages/UserPlaces";
 import {UpdatePlace} from "./places/pages/UpdatePlace";
 import {Auth} from "./user/pages/Auth";
 import {AuthContext} from "./shared/context/auth-context";
+import {useAuth} from "./shared/hooks/auth-hook";
 import './App.css';
 
 function App() {
-    const [token, setToken] = useState(null);
-    const [userId, setUserId] = useState(false);
-
-    const login = useCallback((uid, token) => {
-        setToken(token)
-        setUserId(uid);
-    }, [])
-
-    const logout = useCallback(() => {
-        setToken(null)
-        setUserId(null);
-    }, [])
+    const {token, userId, login, logout} = useAuth();
 
     let routes;
 
