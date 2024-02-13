@@ -13,7 +13,7 @@ import "./PlaceForm.css"
 import {ImageUpload} from "../../shared/components/FormElements/ImageUpload";
 
 
-export const NewPlace = () => {
+const NewPlace = () => {
     const [formState, inputHandler] = useForm({
         title: {
             value: "",
@@ -91,3 +91,5 @@ export const NewPlace = () => {
         </>
     )
 }
+
+export default NewPlace;

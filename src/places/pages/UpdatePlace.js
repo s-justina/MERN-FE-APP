@@ -12,7 +12,7 @@ import {AuthContext} from "../../shared/context/auth-context";
 
 import "./PlaceForm.css"
 
-export const UpdatePlace = () => {
+const UpdatePlace = () => {
     const {isLoading, error, sendRequest, clearError} = useHttpClient();
     const [loadedPlace, setLoadedPlace] = useState();
     const history = useHistory();
@@ -126,3 +126,5 @@ export const UpdatePlace = () => {
         </>
     )
 }
+
+export default UpdatePlace;

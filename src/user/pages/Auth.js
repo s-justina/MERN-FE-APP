@@ -13,7 +13,7 @@ import {ImageUpload} from "../../shared/components/FormElements/ImageUpload";
 import "./Auth.css";
 
 
-export const Auth = () => {
+const Auth = () => {
     const auth = useContext(AuthContext);
     const [isLoginMode, setIsLoginMode] = useState(true);
     const {isLoading, error, clearError, sendRequest} = useHttpClient();
@@ -134,3 +134,5 @@ export const Auth = () => {
         </>
     )
 }
+
+export default Auth;

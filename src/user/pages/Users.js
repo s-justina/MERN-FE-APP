@@ -4,12 +4,12 @@ import ErrorModal from "../../shared/components/UIElements/ErrorModal";
 import LoadingSpinner from "../../shared/components/UIElements/LoadingSpinner";
 import {useHttpClient} from "../../shared/hooks/http-hook";
 
-export const Users = () => {
+const Users = () => {
     const {isLoading, error, sendRequest, clearError} = useHttpClient();
     const [loadedUsers, setLoadedUsers] = useState();
 
     useEffect(() => {
-        const fetchUsers = async ()=>{
+        const fetchUsers = async () => {
             try {
                 const responseData = await sendRequest(`${process.env.REACT_APP_API_BASE_URL}/users`)
 
@@ -34,3 +34,5 @@ export const Users = () => {
         </>
     )
 }
+
+export default Users;
